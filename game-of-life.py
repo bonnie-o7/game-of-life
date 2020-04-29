@@ -1,4 +1,9 @@
 import random
+import pygame
+import sys
+from time import sleep
+
+pygame.init()
 
 def determine_living_neighbors(board, cell): # [x, y]
     living = 0
@@ -34,10 +39,24 @@ def update_board(board):
             elif current == 1 and (living_neighbors <= 1 or living_neighbors > 3):
                 current = 0
 
+def draw_board(board, screen):
+    global BOARD_LENGTH
+    global black
+    
+    for i in range(BOARD_LENGTH):
+        for j in range(BOARD_LENGTH):
+            pygame.draw.rect(screen, black, (i * 10 + 50, j * 10 + 50, 10, 10), 1)
+            if board[i][j] == 1:
+                pygame.draw.rect(screen, black, (i * 10 + 50, j * 10 + 50, 10, 10), 0)
 
 BOARD_LENGTH = 50
 board = []
 ALIVE_CHANCE = 0.05
+
+black = (0, 0, 0)
+white = (255, 255, 255)
+screen = pygame.display.set_mode((600, 600))
+screen.fill(white)
 
 for i in range(BOARD_LENGTH):
     board.append([])
@@ -48,4 +67,8 @@ for i in range(BOARD_LENGTH):
         else:
             board[i].append(0)
 
+draw_board(board, screen)
+pygame.display.update()
 update_board(board)
+
+pygame.time.delay(10000)
