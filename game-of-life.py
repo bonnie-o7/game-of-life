@@ -1,4 +1,3 @@
-from turtle import *
 import random
 
 def determine_living_neighbors(board, cell): # [x, y]
@@ -35,24 +34,6 @@ def update_board(board):
             elif current == 1 and (living_neighbors <= 1 or living_neighbors > 3):
                 current = 0
 
-def draw_board(board):
-    tracer(False)
-
-    color('black','white')
-    for i in range(-250, 250, 10):
-        for j in range(-250, 250, 10):
-            goto(i, j)      
-            stamp()
-
-    color('black')
-    for i in range(0, 50):
-        for j in range(0, 50):
-            if board[i][j] == 1:
-                goto((i - 25) * 10, (j - 25) * 10)
-                stamp()
-
-    tracer(True)        
-    done()
 
 BOARD_LENGTH = 50
 board = []
@@ -68,10 +49,3 @@ for i in range(BOARD_LENGTH):
             board[i].append(0)
 
 update_board(board)
-
-hideturtle()
-shape("square")
-penup()
-shapesize(0.5, 0.5, 0.8)
-
-draw_board(board)
