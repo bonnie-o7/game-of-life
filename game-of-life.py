@@ -35,14 +35,15 @@ def update_board(board):
             living_neighbors = determine_living_neighbors(board, [i, j])
             current = board[i][j]
             if current == 0 and living_neighbors == 3:
-                current = 1
+                board[i][j] = 1
             elif current == 1 and (living_neighbors <= 1 or living_neighbors > 3):
-                current = 0
+                board[i][j] = 0
 
 def draw_board(board, screen):
     global BOARD_LENGTH
-    global black
+    global black, white
     
+    screen.fill(white)
     for i in range(BOARD_LENGTH):
         for j in range(BOARD_LENGTH):
             pygame.draw.rect(screen, black, (i * 10 + 50, j * 10 + 50, 10, 10), 1)
@@ -67,8 +68,13 @@ for i in range(BOARD_LENGTH):
         else:
             board[i].append(0)
 
-draw_board(board, screen)
-pygame.display.update()
-update_board(board)
+for i in range(10000):
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+             pygame.quit(); sys.exit()
 
-pygame.time.delay(10000)
+    draw_board(board, screen)
+    update_board(board)
+
+    pygame.time.delay(500)
+    pygame.display.update()
